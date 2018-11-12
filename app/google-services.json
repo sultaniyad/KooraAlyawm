@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "224244764534",
+    "firebase_url": "https://footbailandroidapp.firebaseio.com",
+    "project_id": "footbailandroidapp",
+    "storage_bucket": "footbailandroidapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224244764534:android:023813d599e9e15a",
+        "android_client_info": {
+          "package_name": "com.iyad.sultan.kooraalyawm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224244764534-ek3ip9mdous74hs9ga3p072p5q1hggnd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDteuQfa1UDUyOhqPXS9GZTk3Rf0Ze5yug"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
