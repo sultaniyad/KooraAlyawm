@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/promote_promote_as_captain"
+        android:orderInCategory="100"
+        android:title="@string/promote_as_captain" />
+
+    <item
+        android:id="@+id/action_demote_as_player"
+        android:orderInCategory="101"
+        android:title="@string/demote_as_player"
+        />
+
+    <item
+        android:id="@+id/action_kick__player"
+        android:orderInCategory="101"
+        android:title="@string/kick_out_group"
+        />
+</menu>

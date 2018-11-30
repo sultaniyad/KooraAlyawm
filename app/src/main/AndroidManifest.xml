@@ -16,6 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SplashActivity">
+
+        </activity>
+        <activity android:name=".Sign.SignIn" />
+        <activity android:name=".Sign.SignUp" />
+        <activity android:name=".Groups.AddGroupActivity"></activity>
+        <activity android:name=".Game.AddGame"/>
+        <activity android:name=".Groups.GroupDetailsActivity"/>
+        <activity android:name=".Game.GameDetailsActivity"/>
+        <activity android:name=".Groups.JoinGroupActivity"/>
+
     </application>
 
 </manifest>

@@ -1,3 +1,59 @@
 <resources>
-    <string name="app_name">KooraAlyawm</string>
+    <string name="app_name">Koora Alyawm</string>
+    <string name="sing_in">Sign In</string>
+    <string name="sing_up">Sign Up</string>
+
+    <!-- Group -->
+    <string name="create_new_group">Create New Group</string>
+    <string name="create_group">Create</string>
+    <string name="group_name">group name</string>
+    <string name="protect_group">Protect Group</string>
+    <string name="hint_lock_group">Only people they have password will join group</string>
+    <string name="password">Password</string>
+    <string name="hint_enter_group_name">Group Name</string>
+
+
+    <!-- Game -->
+
+    <string name="create_new_game">Create New Match</string>
+    <string name="stadium_name">Stadium name</string>
+    <string name="stadium_location">Location google map</string>
+    <string name="Required_number">Required Number</string>
+    <string name="Fees">Fees</string>
+    <string name="canceled">Canceled:</string>
+    <string name="game_date">Game Date</string>
+    <string name="leave_the_game">Sorry, I can\'t attend</string>
+
+    <!-- Fragment -->
+
+    <string name="fragment_group">Groups</string>
+    <string name="fragment_search">Join</string>
+    <string name="fragment_game">Matches</string>
+
+
+
+    <!-- admin Menu -->
+
+    <string name="promote_as_captain">Promote as Captain</string>
+    <string name="demote_as_player">Demote as Player</string>
+    <string name="kick_out_group">Kick</string>
+    <string name="exit_from_group">Exit</string>
+
+
+    <!-- Sign -->
+    <string name="to_create_activity">No account ? Create one</string>
+    <string name="to_login">Already a member? Login</string>
+    <string name="no_priv_to_create_game">No Privileges, check with captain</string>
+
+
+
+    <!-- Tips -->
+
+    <string name="tips">Tips</string>
+
+    <string name="tip1_search">Enter Group name Or Group Tag you are looking for </string>
+    <string name="tip2_search">You need key for join a Protected groups  </string>
+    <string name="tip3_search"></string>
+    <string name="join_group">Join</string>
+
 </resources>

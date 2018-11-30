@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+
+
+
+    <color name="colorPrimary">#246FC5</color>
+    <color name="colorPrimaryDark">#043A78</color>
+    <color name="colorAccent">#EB1919</color>
+    <color name="textColorPrimary">#ffffff</color>
+
+    <color name="editTextBorder">#707070</color>
+
+    <color name="fragment_background">#2b2b2b</color>
+
+
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
+
+    <color name="exitGroup">#FF0000</color>
+
+
+
+
 </resources>
