@@ -62,6 +62,7 @@ public class Group {
         GroupPassword = groupPassword;
     }
 
+
     //get list of valid games for this group /*Only one game valid**
     public List<Game> getGames(){
         List<Game> list = new ArrayList<>(10);

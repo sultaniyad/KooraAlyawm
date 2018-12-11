@@ -76,7 +76,7 @@ public class JoinGroupActivity extends AppCompatActivity {
             etPassword.setVisibility(View.INVISIBLE);
 
         //Show info on page
-        Glide.with(mGroupLogo.getContext()).load(groupIcon).apply(new RequestOptions().circleCrop().placeholder(R.drawable.ic_player_defualt).error(R.drawable.ic_player_error_loading)).into(mGroupLogo);
+        Glide.with(mGroupLogo.getContext()).load(groupIcon).apply(new RequestOptions().circleCrop().placeholder(R.mipmap.ic_player_defualt).error(R.mipmap.ic_player_error_loading)).into(mGroupLogo);
         mGroupName.setText(groupName);
     }
 

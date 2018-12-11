@@ -61,7 +61,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerPlac
         //Load Image on Bind View
         String url = mDataset.get(i).getPlayerIcon();
 
-        Glide.with(playerLogo.getContext()).load(url).apply(new RequestOptions().placeholder(R.drawable.ic_player_defualt).error(R.drawable.ic_player_error_loading)).into(playerLogo);
+        Glide.with(playerLogo.getContext()).load(url).apply(new RequestOptions().placeholder(R.mipmap.ic_player_defualt).error(R.mipmap.ic_player_error_loading)).into(playerLogo);
 
     }
 

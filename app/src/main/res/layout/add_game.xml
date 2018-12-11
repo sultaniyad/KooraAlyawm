@@ -27,6 +27,7 @@
         android:layout_marginBottom="10dp" />
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_stadium_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -42,6 +43,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -51,12 +53,13 @@
         android:id="@+id/AddGame_et_stadium_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/stadium_location"
-        android:inputType="textUri" />
+        android:focusable="false"
+        android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_required_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -72,6 +75,7 @@
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_fees"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -87,6 +91,7 @@
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -112,6 +117,7 @@
             android:layout_marginBottom="24dp"
             android:padding="10dp"
             android:text="@string/create_group"
+            android:textColor="@color/white"
             app:backgroundTint="@color/colorAccent" />
     </LinearLayout>
 

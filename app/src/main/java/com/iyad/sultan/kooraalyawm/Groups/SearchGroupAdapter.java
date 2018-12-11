@@ -51,7 +51,7 @@ public class SearchGroupAdapter extends RecyclerView.Adapter<SearchGroupAdapter.
 
         //Load Image on Bind View
         String url = group.getGroupLogo();
-        Glide.with(mGroupLogo.getContext()).load(url).apply(new RequestOptions().circleCrop().placeholder(R.drawable.ic_player_defualt).error(R.drawable.ic_player_error_loading)).into(mGroupLogo);
+        Glide.with(mGroupLogo.getContext()).load(url).apply(new RequestOptions().circleCrop().placeholder(R.mipmap.ic_player_defualt).error(R.mipmap.ic_player_error_loading)).into(mGroupLogo);
 
         groupPlaceHolder.mGroupName.setText(group.getGroupName());
         groupPlaceHolder.mGroupCurrentNumber.setText(group.getCurrentPlayers()+"");
@@ -63,6 +63,11 @@ public class SearchGroupAdapter extends RecyclerView.Adapter<SearchGroupAdapter.
     @Override
     public int getItemCount() {
         return mSerachGroups.size();
+    }
+
+
+    public void updateData(List<Group> newDataset) {
+        this.mSerachGroups = newDataset;
     }
 
 

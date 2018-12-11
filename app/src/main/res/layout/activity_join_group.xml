@@ -54,7 +54,8 @@
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:text="@string/join_group"
-           />
+            android:textColor="@color/white"
+            app:backgroundTint="@color/colorPrimary"           />
 
         <TextView
             android:id="@+id/join_error_message"
@@ -63,7 +64,7 @@
             android:layout_marginBottom="24dp"
             android:text="Password not correct"
             android:gravity="center"
-            android:textSize="16dip"/>
+            android:textSize="16sp"/>
 
     </LinearLayout>
 </ScrollView>

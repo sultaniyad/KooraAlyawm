@@ -53,7 +53,19 @@
 
     <string name="tip1_search">Enter Group name Or Group Tag you are looking for </string>
     <string name="tip2_search">You need key for join a Protected groups  </string>
-    <string name="tip3_search"></string>
     <string name="join_group">Join</string>
 
+    <string name="need_to_login">Please sign in before</string>
+
+    <!-- Error messages -->
+    <string name="required_filed">Required</string>
+    <string name="email">Email</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="invalid_email">invalid email</string>
+
+
+    <!-- Actions -->
+    <string name="login">Login</string>
+    <string name="no_account_create_one">No account ? Create one here</string>
+    <string name="provide_required_information">Provide required information</string>
 </resources>

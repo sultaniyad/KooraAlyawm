@@ -16,12 +16,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.iyad.sultan.kooraalyawm.Dumb.DumbGen;
 import com.iyad.sultan.kooraalyawm.Groups.JoinGroupActivity;
 import com.iyad.sultan.kooraalyawm.Groups.SearchGroupAdapter;
 import com.iyad.sultan.kooraalyawm.Model.Group;
 import com.iyad.sultan.kooraalyawm.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentSearch extends Fragment implements SearchGroupAdapter.OnSelectedGroup {
@@ -43,6 +46,9 @@ public class FragmentSearch extends Fragment implements SearchGroupAdapter.OnSel
     private List<Group> mDataset;
     private SearchGroupAdapter mAdapter;
 
+    //Firebase
+    private FirebaseAuth mAuth;
+
     //UI
     private RecyclerView mRecyclerView ;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -55,28 +61,25 @@ public class FragmentSearch extends Fragment implements SearchGroupAdapter.OnSel
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
-
-
            View v = inflater.inflate(R.layout.serach_fragment,container,false);
+           mAuth = FirebaseAuth.getInstance();
+           drawUI(v);
+
+        return v;
+    }
+
+    private void drawUI(View v){
 
         //DrawUI
         mRecyclerView =v.findViewById(R.id.search_rec_short);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mDataset = getSearchGroup("key");
+        mDataset = new ArrayList<>(); //getSearchGroup("key");
         mAdapter = new SearchGroupAdapter(mDataset,this);
         mRecyclerView.setAdapter(mAdapter);
 
         //set Toolbar
         setHasOptionsMenu(true);
-
-        //
-        return v;
-    }
-
-    private void drawUI(){
-
 
     }
 
@@ -98,10 +101,9 @@ public class FragmentSearch extends Fragment implements SearchGroupAdapter.OnSel
                 @Override
                 public boolean onQueryTextSubmit(String s) {
 
-
-
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    if(user != null)
                     updateUI(s);
-
 
                     return false;
                 }
@@ -125,7 +127,12 @@ public class FragmentSearch extends Fragment implements SearchGroupAdapter.OnSel
 
     private void updateUI(String key)
     {
+
+
+         mDataset = getSearchGroup(key);
+         mAdapter.updateData( mDataset);
         //Key used to get group id, or group name
+        mAdapter.notifyDataSetChanged();
         Toast.makeText(getContext(), "" + key, Toast.LENGTH_SHORT).show();
     }
 
@@ -136,7 +143,7 @@ public class FragmentSearch extends Fragment implements SearchGroupAdapter.OnSel
         return new DumbGen().findSearchGroups(""+ key);
     }
 
-    //On Group selected
+    //On Group selected (Bundled)
     @Override
     public void SelectedGroup(int position) {
 
@@ -158,5 +165,9 @@ public class FragmentSearch extends Fragment implements SearchGroupAdapter.OnSel
     }
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
 
+    }
 }

@@ -56,7 +56,7 @@ public class PlayerGameAdapter extends RecyclerView.Adapter<PlayerGameAdapter.My
 
         //set Images
         ImageView mPlayerIcon = myViewHolder.mPlayerIcon;
-        Glide.with(mPlayerIcon.getContext()).load(player.getPlayer().getPlayerIcon()).apply(new RequestOptions().circleCrop().placeholder(R.drawable.game_icon_tab).error(R.drawable.ic_player_error_loading)).into(mPlayerIcon);
+        Glide.with(mPlayerIcon.getContext()).load(player.getPlayer().getPlayerIcon()).apply(new RequestOptions().circleCrop().placeholder(R.drawable.game_icon_tab).error(R.mipmap.ic_player_error_loading)).into(mPlayerIcon);
 
     }
 
