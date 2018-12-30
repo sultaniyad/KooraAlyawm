@@ -16,6 +16,7 @@ import com.iyad.sultan.kooraalyawm.Model.Player;
 import com.iyad.sultan.kooraalyawm.R;
 
 import java.util.List;
+import java.util.Map;
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerPlaceHolder>  {
 
@@ -33,10 +34,13 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerPlac
     //interface  member
     private CaptianAction mAction;
 //Data
+    //Group Key
     private List<Player> mDataset;
-    public PlayerAdapter(List<Player> mDataset, CaptianAction mAdminAction){
+    private String mGroupKey;
+    public PlayerAdapter(List<Player> mDataset, CaptianAction mAdminAction,String GroupKey){
         this.mDataset = mDataset;
         this.mAction = mAdminAction;
+        this.mGroupKey = GroupKey;
 
     }
 
@@ -54,13 +58,28 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerPlac
     public void onBindViewHolder(@NonNull PlayerPlaceHolder placeHolder, int i) {
 
         ImageView playerLogo ;
-        placeHolder.mPlayerName.setText(mDataset.get(i).getPlayerName());
-        placeHolder.mPlayerPriv.setText(mDataset.get(i).getPrivilege());
+        placeHolder.mPlayerName.setText(mDataset.get(i).getName());
+
+        //check if user admin in this group key or Not (null when there is NO Group Key from Map )
+        //User most be Captain(Admin) or Player (Regular user)
+        Map<String,Object> privielge = mDataset.get(i).getPrivilege();
+        if(privielge != null) {
+            Object isAdminInThisGroup = mDataset.get(i).getPrivilege().get(mGroupKey);
+            if (isAdminInThisGroup != null)
+                placeHolder.mPlayerPriv.setText("Captain");
+            //Not Exit in the Admin Pillages
+           else   placeHolder.mPlayerPriv.setText("Player");
+        }
+        else
+            //Not Exit in the Admin Pillages
+            placeHolder.mPlayerPriv.setText("Player");
+
+      //  placeHolder.mPlayerPriv.setText("Player !!!");
+
+        //set Player Icon
         playerLogo = placeHolder.mPlayerIcon;
-
         //Load Image on Bind View
-        String url = mDataset.get(i).getPlayerIcon();
-
+        String url = mDataset.get(i).getIcon();
         Glide.with(playerLogo.getContext()).load(url).apply(new RequestOptions().placeholder(R.mipmap.ic_player_defualt).error(R.mipmap.ic_player_error_loading)).into(playerLogo);
 
     }
@@ -93,7 +112,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerPlac
         void loadThumbnail(){
 
             String imageUrl ;
-            imageUrl = mDataset.get(getAdapterPosition()).getPlayerIcon();
+            imageUrl = mDataset.get(getAdapterPosition()).getIcon();
             Glide.with(mPlayerIcon.getContext()).load(imageUrl).into(mPlayerIcon);
         }
 

@@ -1,8 +1,8 @@
 package com.iyad.sultan.kooraalyawm.Groups;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.database.collection.LLRBNode;
 import com.iyad.sultan.kooraalyawm.Model.Group;
+import com.iyad.sultan.kooraalyawm.Model.Group3;
 import com.iyad.sultan.kooraalyawm.R;
 
 import java.util.List;
@@ -50,12 +52,20 @@ public class SearchGroupAdapter extends RecyclerView.Adapter<SearchGroupAdapter.
        ImageView mGroupLogo = groupPlaceHolder.mGroupIcon;
 
         //Load Image on Bind View
-        String url = group.getGroupLogo();
+        String url = group.getLogo();
         Glide.with(mGroupLogo.getContext()).load(url).apply(new RequestOptions().circleCrop().placeholder(R.mipmap.ic_player_defualt).error(R.mipmap.ic_player_error_loading)).into(mGroupLogo);
 
-        groupPlaceHolder.mGroupName.setText(group.getGroupName());
-        groupPlaceHolder.mGroupCurrentNumber.setText(group.getCurrentPlayers()+"");
-
+        groupPlaceHolder.mGroupName.setText(group.getName());
+        if(group.getMembers() != null) {
+            groupPlaceHolder.mGroupCurrentNumber.setText(group.getMembers().size() + "");
+            //Can not join this group
+            if (group.getMembers().size() > 50) {
+                groupPlaceHolder.mJoinGroupBtn.setVisibility(View.INVISIBLE);
+                groupPlaceHolder.mGroupCurrentNumber.setTextColor(Color.RED);
+            }
+        }
+        else
+            groupPlaceHolder.mGroupCurrentNumber.setText("0");
 
 
     }

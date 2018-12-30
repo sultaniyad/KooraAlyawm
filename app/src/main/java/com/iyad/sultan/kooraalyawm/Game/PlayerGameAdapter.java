@@ -38,10 +38,10 @@ public class PlayerGameAdapter extends RecyclerView.Adapter<PlayerGameAdapter.My
 
 
         GameAttendees player = mDataset.get(i);
-        myViewHolder.mPlayerName.setText(player.getPlayer().getPlayerName());
+        myViewHolder.mPlayerName.setText(player.getPlayername());
 
         //color green
-        if(player.getIsAttend()){
+        if(player.isAttend()){
             TextView tv = myViewHolder.isAttend;
             tv.setTextColor(Color.GREEN);
             tv.setText("Attend");
@@ -51,12 +51,12 @@ public class PlayerGameAdapter extends RecyclerView.Adapter<PlayerGameAdapter.My
 
             TextView tv = myViewHolder.isAttend;
             tv.setTextColor(Color.RED);
-            tv.setText("Canceled");
+            tv.setText("Not Sure");
         }
 
         //set Images
         ImageView mPlayerIcon = myViewHolder.mPlayerIcon;
-        Glide.with(mPlayerIcon.getContext()).load(player.getPlayer().getPlayerIcon()).apply(new RequestOptions().circleCrop().placeholder(R.drawable.game_icon_tab).error(R.mipmap.ic_player_error_loading)).into(mPlayerIcon);
+        Glide.with(mPlayerIcon.getContext()).load(player.getPlayericon()).apply(new RequestOptions().circleCrop().placeholder(R.drawable.game_icon_tab).error(R.mipmap.ic_player_error_loading)).into(mPlayerIcon);
 
     }
 

@@ -43,13 +43,19 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
 
-        Game g = mDataset.get(i);
-        myViewHolder.mGroupName.setText(g.getGroupName());
-        myViewHolder.mGameDate.setText(DateFormat.getDateTimeInstance().format(g.getDate()));
-        myViewHolder.mAttends.setText(g.getRolling() + "");
-        myViewHolder.mCanceled.setText(g.getCanceled() + " ");
-        myViewHolder.mRequired.setText(g.getRequiredNumber() + "");
 
+        Game g = mDataset.get(i);
+        if(g != null) {
+            myViewHolder.mGroupName.setText(g.getGroupname());
+            myViewHolder.mStatium.setText(g.getStadium());
+            //  myViewHolder.mGameDate.setText(DateFormat.getDateTimeInstance().format(g.getDate()));
+            myViewHolder.mGameDate.setText(g.getDate());
+
+            myViewHolder.mAttends.setText(g.getRolling().size() + "");
+            //  myViewHolder.mCanceled.setText(g.getCanceled());
+            myViewHolder.mRequired.setText(g.getRequirednumber());
+            myViewHolder.mFee.setText(g.getFees() + " SAR");
+        }
 
 
 
@@ -68,8 +74,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         private TextView mGroupName;
         private TextView mRequired;
         private TextView mAttends;
-        private TextView mCanceled;
+      //  private TextView mCanceled;
         private TextView mGameDate;
+        private TextView mStatium;
+        private TextView mFee;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,7 +85,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
             mRequired =  itemView.findViewById(R.id.txt_game_required_number);
             mAttends = itemView.findViewById(R.id.txt_game_attendance);
             mGameDate = itemView.findViewById(R.id.txt_game_date);
-            mCanceled = itemView.findViewById(R.id.txt_canceled_player);
+        //    mCanceled = itemView.findViewById(R.id.txt_canceled_player);
+            mStatium = itemView.findViewById(R.id.stadium_name);
+            mFee = itemView.findViewById(R.id.txt_game_fee);
 
             mCardView = itemView.findViewById(R.id.gameCardView);
             mCardView.setOnClickListener(new View.OnClickListener() {

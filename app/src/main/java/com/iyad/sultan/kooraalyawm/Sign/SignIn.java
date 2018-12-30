@@ -23,13 +23,23 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.iyad.sultan.kooraalyawm.Model.Player;
 import com.iyad.sultan.kooraalyawm.R;
+import com.iyad.sultan.kooraalyawm.Utilities.Constants;
 import com.iyad.sultan.kooraalyawm.Utilities.UiValidator;
 // DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("Users");
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.validation.Validator;
+
+import static com.iyad.sultan.kooraalyawm.Utilities.Constants.USER_DEFAULT_GROUP;
+import static com.iyad.sultan.kooraalyawm.Utilities.Constants.USER_DEFAULT_PRIVILEGE;
+import static com.iyad.sultan.kooraalyawm.Utilities.Constants.USER_DEFAUL_ICON;
 
 public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
@@ -62,6 +72,8 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         drawUI();
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        //
+
 
     }
     private void drawUI(){
@@ -82,26 +94,29 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
     // SingIn create a new user
     public void createSignInIntent() {
+
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build());
 
-        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setLogo(R.drawable.ic_launcher_foreground).build(),RC_SIGN_IN);
+        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(),RC_SIGN_IN);
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if(RC_SIGN_IN == 101){
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
+
                 if(resultCode == RESULT_OK){
-                    // Successfully signed in
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    Toast.makeText(this, "Singed Successfully" + user.getUid(), Toast.LENGTH_SHORT).show();
-                    //add user info to rest of tree
+                    // Successfully signed in (Register)
+                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                    addUserInfo(user);
 
+                    finish();
 
                     //updateUI()
                     //Add User UID to DB with user new info
@@ -113,6 +128,28 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(this, "Failed check user or password", Toast.LENGTH_SHORT).show();
                 }
         }
+
+    }
+
+    private void addUserInfo(FirebaseUser user) {
+
+        Toast.makeText(this, "Singed Successfully", Toast.LENGTH_SHORT).show();
+
+        //add user info to rest of tree
+
+        Player player = new Player();
+        player.setId(user.getUid());
+        player.setName(user.getDisplayName());
+        player.setIcon(getDefaultPlayerIcon());
+        player.setGroups(null);
+        player.setPrivilege(null);
+
+
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("players");
+
+
+        //  String key = myRef.child("players").push().getKey();
+        myRef.child(user.getUid()).setValue(player);
 
     }
 
@@ -260,9 +297,9 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         super.onStart();
 
         // Check if user is signed in (non-null)
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser  != null)
-        finish();
+
+
+
     }
 
 
@@ -275,5 +312,10 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
             case R.id.btn_login: submitForm();
 
         }
+    }
+
+
+    public String getDefaultPlayerIcon() {
+        return "android.resource://com.iyad.sultan.kooraalyawm/mipmap/ic_player_defualt";
     }
 }

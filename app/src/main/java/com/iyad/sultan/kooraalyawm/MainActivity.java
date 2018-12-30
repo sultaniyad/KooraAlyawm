@@ -2,6 +2,7 @@ package com.iyad.sultan.kooraalyawm;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -59,11 +60,12 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this, "check if auth MainActivity Resume", Toast.LENGTH_SHORT).show();
+
     }
 
     private void drawUI(){
         viewPager = (ViewPager) findViewById(R.id.home_page_viewPager);
+        viewPager.setOffscreenPageLimit(3);
         tabLayout =(TabLayout) findViewById(R.id.home_page_tabLayout);
         toolbar = (Toolbar) findViewById(R.id.home_page_toolBar);
 
@@ -95,27 +97,46 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onStart() {
         super.onStart();
-        isUserSign();
-        checkPremissin("");
+
+        //check permission
+            checkPermission();
+
     }
 
-    private boolean isUserSign() {
+       private boolean isUserSign() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         return (user != null);
     }
 
 //Permissions Handling
 
-    public void checkPremissin(String permission){
-        String perm = "" + Manifest.permission.WRITE_CALENDAR;
-        if (ContextCompat.checkSelfPermission(MainActivity.this, perm)
+    public void checkPermission( ){
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            // Permission is not granted
-            //Request it
-            String [] prem = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                 Manifest.permission.ACCESS_FINE_LOCATION};
-          ActivityCompat.requestPermissions(MainActivity.this,prem,PREMISSION_REQUEST_CODE);
+            // Permission is not granted ?
+
+            String [] requestedPermission = { Manifest.permission.ACCESS_FINE_LOCATION};
+          ActivityCompat.requestPermissions(MainActivity.this,requestedPermission,PREMISSION_REQUEST_CODE);
+        }
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted ?
+
+            String [] requestedPermission = { Manifest.permission.READ_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(MainActivity.this,requestedPermission,PREMISSION_REQUEST_CODE);
+        }
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted ?
+
+            String [] requestedPermission = { Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(MainActivity.this,requestedPermission,PREMISSION_REQUEST_CODE);
         }
     }
 
@@ -124,13 +145,24 @@ public class MainActivity extends AppCompatActivity  {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if(requestCode == PREMISSION_REQUEST_CODE){
+            int count = 0;
+           for(int result : grantResults){
 
-            for(int i = 0;i< grantResults.length ; i++){
 
-                Toast.makeText(this, "" + permissions[i] + " Status " + grantResults[i], Toast.LENGTH_SHORT).show();
-            }
+               if(result == 0){
+                  count ++;
+               }
+           }//loop
+            if(count > 0)
+                showAlert();
 
 
         }
+    }
+
+    private void showAlert(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Permissions needed, PLease Exit App ant try again ");
+        alertDialog.create();
     }
 }

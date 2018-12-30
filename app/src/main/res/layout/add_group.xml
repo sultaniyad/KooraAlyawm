@@ -63,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_enter_group_name"
+                android:capitalize="none"
                 android:inputType="textCapWords"
             />
         </android.support.design.widget.TextInputLayout>
@@ -80,6 +81,7 @@
             app:showText="false"/>
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_add_group_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
@@ -106,6 +108,15 @@
             android:text="@string/create_group"
             android:textColor="@color/white"
             app:backgroundTint="@color/colorAccent" />
+
+    <ProgressBar
+        android:id="@+id/addGroupIndeterminateBar"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="true"
+        android:layout_marginBottom="12dp" />
 
 
 </LinearLayout>

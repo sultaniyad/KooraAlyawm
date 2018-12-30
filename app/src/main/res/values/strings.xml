@@ -18,15 +18,15 @@
     <string name="create_new_game">Create New Match</string>
     <string name="stadium_name">Stadium name</string>
     <string name="stadium_location">Location google map</string>
-    <string name="Required_number">Required Number</string>
-    <string name="Fees">Fees</string>
-    <string name="canceled">Canceled:</string>
+    <string name="Required_number">Number \u0020</string>
+    <string name="Fees">Fees \u0020</string>
+    <string name="canceled">Not Sure</string>
     <string name="game_date">Game Date</string>
     <string name="leave_the_game">Sorry, I can\'t attend</string>
 
     <!-- Fragment -->
 
-    <string name="fragment_group">Groups</string>
+    <string name="fragment_group">Teams</string>
     <string name="fragment_search">Join</string>
     <string name="fragment_game">Matches</string>
 
@@ -68,4 +68,10 @@
     <string name="login">Login</string>
     <string name="no_account_create_one">No account ? Create one here</string>
     <string name="provide_required_information">Provide required information</string>
+
+
+    <string name="captain">Captain</string>
+    <string name="player">Player</string>
 </resources>
+
+

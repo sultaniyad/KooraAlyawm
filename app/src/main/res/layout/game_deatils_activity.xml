@@ -2,7 +2,7 @@
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/main_content"
+        android:id="@+id/root_layout_game_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
@@ -41,6 +41,7 @@
 
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/exit_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -52,6 +53,19 @@
         app:layout_anchorGravity="bottom|right|end"/>
 
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/join_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_join_game"
+        android:clickable="true"
+        android:focusable="true"
+        app:fabSize="mini"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="bottom|left|start"/>
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/game_details_rec"
         android:layout_width="match_parent"
@@ -61,6 +75,18 @@
     </android.support.v7.widget.RecyclerView>
 
 
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_join_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:padding="12dp"
+        android:text="@string/login"
+        app:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/white" />
 
 
 

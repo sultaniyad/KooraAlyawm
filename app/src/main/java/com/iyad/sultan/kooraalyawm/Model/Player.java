@@ -1,54 +1,54 @@
 package com.iyad.sultan.kooraalyawm.Model;
 
-import java.util.List;
+
+import java.util.Map;
 
 public class Player {
 
-    public String getPlayerId() {
-        return PlayerId;
+    private String id;
+    private String name;
+    private String icon;
+    private Map<String,Object> privilege;
+    private Map<String,Object> groups;
+
+
+    public String getId() {
+        return id;
     }
 
-    public void setPlayerId(String playerId) {
-        PlayerId = playerId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getPlayerName() {
-        return PlayerName;
+    public String getName() {
+        return name;
     }
 
-    public void setPlayerName(String playerName) {
-        PlayerName = playerName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPlayerIcon() {
-        return PlayerIcon;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setPlayerIcon(String playerIcon) {
-        PlayerIcon = playerIcon;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
-    public String getPrivilege() {
-        return Privilege;
+    public Map<String, Object> getPrivilege() {
+        return privilege;
     }
 
-    public void setPrivilege(String privilege) {
-        Privilege = privilege;
+    public void setPrivilege(Map<String, Object> privilege) {
+        this.privilege = privilege;
     }
 
-    private String PlayerId;
-    private String PlayerName;
-    private String PlayerIcon;
-    private String Privilege;
-
-    public List<Group> getUserGroup() {
-        return UserGroup;
+    public Map<String, Object> getGroups() {
+        return groups;
     }
 
-    public void setUserGroup(List<Group> userGroup) {
-        UserGroup = userGroup;
+    public void setGroups(Map<String, Object> groups) {
+        this.groups = groups;
     }
-
-    private List<Group> UserGroup;
-
 }

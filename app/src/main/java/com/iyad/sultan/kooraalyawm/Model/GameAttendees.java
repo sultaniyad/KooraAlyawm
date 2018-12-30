@@ -2,27 +2,58 @@ package com.iyad.sultan.kooraalyawm.Model;
 
 public class GameAttendees {
 
-    public GameAttendees(Player player,boolean isAttend){
+    private String playerid;
+    private String playername;
+    private String playericon;
+    private boolean attend;
+    private String joindate;
 
-        this.player = player;
-        this.isAttend = isAttend;
-    }
-    public Player getPlayer() {
-        return player;
-    }
+    public GameAttendees(){}
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
+    public GameAttendees(String playerid,boolean attend){
 
-    public boolean getIsAttend() {
-        return isAttend;
+        this.playerid = playerid;
+        this.attend = attend;
     }
 
-    public void setIsAttend(boolean isAttend) {
-        this.isAttend = isAttend;
+    public String getPlayerid() {
+        return playerid;
     }
 
-    private Player player;
-    private boolean isAttend;
+    public void setPlayerid(String playerid) {
+        this.playerid = playerid;
+    }
+
+
+    public String getPlayername() {
+        return playername;
+    }
+
+    public void setPlayername(String playername) {
+        this.playername = playername;
+    }
+
+    public String getPlayericon() {
+        return playericon;
+    }
+
+    public void setPlayericon(String playericon) {
+        this.playericon = playericon;
+    }
+
+    public boolean isAttend() {
+        return attend;
+    }
+
+    public void setAttend(boolean attend) {
+        this.attend = attend;
+    }
+
+    public String getJoindate() {
+        return joindate;
+    }
+
+    public void setJoindate(String joindate) {
+        this.joindate = joindate;
+    }
 }

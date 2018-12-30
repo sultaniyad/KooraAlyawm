@@ -53,8 +53,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-                    android:text="Group name"
                     android:textStyle="bold" />
+                <TextView
+
+                    android:id="@+id/stadium_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"/>
 
                 <LinearLayout
                     android:layout_width="224dp"
@@ -91,7 +96,7 @@
                             android:id="@+id/txt_game_required_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="30" />
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -102,14 +107,14 @@
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/canceled"
+                            android:text="@string/Fees"
                             android:textStyle="bold"/>
 
                         <TextView
-                            android:id="@+id/txt_canceled_player"
+                            android:id="@+id/txt_game_fee"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2" />
+                          />
                     </LinearLayout>
 
 
@@ -117,7 +122,7 @@
                         android:id="@+id/txt_game_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="2018-12-5 60 PM" />
+                         />
 
 
                 </LinearLayout>

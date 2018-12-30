@@ -1,19 +1,24 @@
 package com.iyad.sultan.kooraalyawm.Groups;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.iyad.sultan.kooraalyawm.Model.Group;
+import com.iyad.sultan.kooraalyawm.Model.Group3;
 import com.iyad.sultan.kooraalyawm.R;
 
 import java.util.List;
 
-public class UserGroupAdapter extends RecyclerView.Adapter<UserGroupAdapter.GroupPlaceHolder>  {
+public class UserGroupAdapter extends RecyclerView.Adapter<UserGroupAdapter.GroupPlaceHolder> {
 
 
     UserGroupCallBack mCallBack;
@@ -25,7 +30,10 @@ public class UserGroupAdapter extends RecyclerView.Adapter<UserGroupAdapter.Grou
         this.mUserGroups = myDataset;
         this.mCallBack = mCallBack;
 
+    }
 
+    public void updateAdapterSet(List<Group> set) {
+        this.mUserGroups = set;
     }
 
     @NonNull
@@ -42,7 +50,16 @@ public class UserGroupAdapter extends RecyclerView.Adapter<UserGroupAdapter.Grou
     public void onBindViewHolder(@NonNull GroupPlaceHolder groupPlaceHolder, int i) {
 
         Group group = mUserGroups.get(i);
-        groupPlaceHolder.mGroupName.setText(group.getGroupName());
+
+        if (group != null) {
+            groupPlaceHolder.mGroupName.setText(group.getName());
+            groupPlaceHolder.mCurrenPlayer.setText(mUserGroups.get(i).getMembers().size() + "");
+            ImageView garoupIcon = groupPlaceHolder.mIcon;
+            Uri uri = Uri.parse(group.getLogo());
+            Glide.with(garoupIcon.getContext()).load(uri.toString()).
+                    apply(new RequestOptions().circleCrop().placeholder(R.drawable.ic_group).error(R.mipmap.ic_player_error_loading)).into(garoupIcon);
+
+        }
 
     }
 
@@ -53,15 +70,20 @@ public class UserGroupAdapter extends RecyclerView.Adapter<UserGroupAdapter.Grou
 
 
     //Place holder
-    public  class GroupPlaceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class GroupPlaceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private CardView mCardView;
-        public TextView mGroupName;
+        private TextView mGroupName;
+        private TextView mCurrenPlayer;
+        private ImageView mIcon;
+
         public GroupPlaceHolder(@NonNull View itemView) {
             super(itemView);
             mCardView = (CardView) itemView.findViewById(R.id.group_cardview);
             mCardView.setOnClickListener(this);
             mGroupName = (TextView) itemView.findViewById(R.id.txt_group_name);
+            mCurrenPlayer = itemView.findViewById(R.id.txt_group_current_number);
+            mIcon = itemView.findViewById(R.id.img_group_thumbnail);
         }
 
         @Override
@@ -73,10 +95,8 @@ public class UserGroupAdapter extends RecyclerView.Adapter<UserGroupAdapter.Grou
     }
 
 
-
-
     //callBack
-    public interface UserGroupCallBack{
+    public interface UserGroupCallBack {
         void selectedGroup(int position);
     }
 

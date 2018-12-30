@@ -5,8 +5,10 @@ import java.util.Date;
 public class IHelper {
 
 
+
     //Only Captain has priv to start a game
     public boolean isPlayerCaptainInThisTeam(String playerKey, String groupKey){
+
 
         return true;
     }

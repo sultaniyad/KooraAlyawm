@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.iyad.sultan.kooraalyawm.Sign.SignIn;
 import com.iyad.sultan.kooraalyawm.Sign.SignUp;
 import android.content.SharedPreferences;
@@ -36,6 +38,8 @@ public class SplashActivity extends AppCompatActivity {
 
                 //close this activity
 
+
+                if(isUserSign())
                     callSignIn();
 
                     finish();
@@ -68,5 +72,10 @@ public class SplashActivity extends AppCompatActivity {
 
         preferences = getSharedPreferences(USER_UID,MODE_PRIVATE);
         return preferences.getBoolean(USER_UID,false);
+    }
+
+    private boolean isUserSign() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        return (user == null);
     }
 }

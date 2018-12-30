@@ -1,130 +1,126 @@
 package com.iyad.sultan.kooraalyawm.Model;
 
 import java.util.Date;
+import java.util.Map;
 
 public class Game {
 
-    public String getGameId() {
-        return GameId;
+
+    private String id;
+    private String stadium;
+
+    private String location;
+
+    private String requirednumber;
+
+    private String registered;
+
+    private String fees;
+    private Map<String,Object> rolling;
+    private String canceled;
+
+    private String date;
+    private boolean valid;
+
+    private String groupid;
+    private String groupname;
+
+    public Game(){}
+
+    public String getId() {
+        return id;
     }
 
-    public void setGameId(String gameId) {
-        GameId = gameId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getStadium() {
-        return Stadium;
+        return stadium;
     }
 
     public void setStadium(String stadium) {
-        Stadium = stadium;
+        this.stadium = stadium;
     }
 
     public String getLocation() {
-        return Location;
+        return location;
     }
 
     public void setLocation(String location) {
-        Location = location;
+        this.location = location;
     }
 
-    public int getRequiredNumber() {
-        return RequiredNumber;
+    public String getRequirednumber() {
+        return requirednumber;
     }
 
-    public void setRequiredNumber(int requiredNumber) {
-        RequiredNumber = requiredNumber;
+    public void setRequirednumber(String requirednumber) {
+        this.requirednumber = requirednumber;
     }
 
-    public int getFees() {
-        return Fees;
+    public String getFees() {
+        return fees;
     }
 
-    public void setFees(int fees) {
-        Fees = fees;
+    public void setFees(String fees) {
+        this.fees = fees;
     }
 
-    public int getRolling() {
-        return Rolling;
+    public Map<String,Object> getRolling() {
+        return rolling;
     }
 
-    public void setRolling(int rolling) {
-        Rolling = rolling;
+    public void setRolling(Map<String,Object> rolling) {
+        this.rolling = rolling;
     }
 
-    public int getCanceled() {
-        return Canceled;
+    public String getCanceled() {
+        return canceled;
     }
 
-    public void setCanceled(int canceled) {
-        Canceled = canceled;
+    public void setCanceled(String canceled) {
+        this.canceled = canceled;
     }
 
-    public boolean isValid() {
-        return isValid;
-    }
-
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
-
-
-    private String GameId;
-    private String Stadium;
-
-    public String getLatitude() {
-        return Latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        Latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return Longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        Longitude = longitude;
-    }
-
-    private String Latitude;
-    private String Longitude;
-    //delete later
-    private String Location;
-    private int RequiredNumber;
-    private int Fees;
-    private int Rolling;
-    private int Canceled;
-
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    private Date date;
-    private boolean isValid;
-
-    public String getGroupID() {
-        return GroupID;
+    public boolean isValid() {
+        return valid;
     }
 
-    public void setGroupID(String groupID) {
-        GroupID = groupID;
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
-    public String getGroupName() {
-        return GroupName;
+    public String getGroupid() {
+        return groupid;
     }
 
-    public void setGroupName(String groupName) {
-        GroupName = groupName;
+    public void setGroupid(String groupid) {
+        this.groupid = groupid;
     }
 
-    private String GroupID;
-    private String GroupName;
+    public String getGroupname() {
+        return groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
+    }
+    public String getRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(String registered) {
+        this.registered = registered;
+    }
+
 
 }

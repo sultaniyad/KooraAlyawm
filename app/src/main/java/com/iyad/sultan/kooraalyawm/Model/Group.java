@@ -1,77 +1,80 @@
 package com.iyad.sultan.kooraalyawm.Model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class Group {
 
-    private String GroupId;
-    private String GroupName;
-    private boolean isProtected;
-    private String GroupPassword;
-
-    public String getGroupLogo() {
-        return GroupLogo;
+    public String getId() {
+        return id;
     }
 
-    public void setGroupLogo(String groupLogo) {
-        GroupLogo = groupLogo;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    private String GroupLogo;
-
-    public int getCurrentPlayers() {
-        return CurrentPlayers;
+    public String getName() {
+        return name;
     }
 
-    public void setCurrentPlayers(int currentPlayers) {
-        CurrentPlayers = currentPlayers;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    private int CurrentPlayers;
-
-    public String getGroupId() {
-        return GroupId;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setGroupId(String groupId) {
-        GroupId = groupId;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
-    public String getGroupName() {
-        return GroupName;
+    public boolean isSecure() {
+        return secure;
     }
 
-    public void setGroupName(String groupName) {
-        GroupName = groupName;
+    public void setSecure(boolean secure) {
+        this.secure = secure;
     }
 
-    public boolean isProtected() {
-        return isProtected;
+    public String getPassword() {
+        return password;
     }
 
-    public void setProtected(boolean aProtected) {
-        isProtected = aProtected;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getGroupPassword() {
-        return GroupPassword;
+    public Map<String, Object> getMembers() {
+        return members;
     }
 
-    public void setGroupPassword(String groupPassword) {
-        GroupPassword = groupPassword;
+    public void setMembers(Map<String, Object> members) {
+        this.members = members;
     }
 
-
-    //get list of valid games for this group /*Only one game valid**
-    public List<Game> getGames(){
-        List<Game> list = new ArrayList<>(10);
-        return list;
+    public Map<String, Object> getCurrentgames() {
+        return currentgames;
     }
-    //get the last game added to tree then check the date if if expire do'nt show it game (shwow status)
-    public Game getLastGame(){
 
-        Game game = new Game();
-        return game;
+    public void setCurrentgames(Map<String, Object> currentgames) {
+        this.currentgames = currentgames;
     }
+
+    public Map<String, Object> getPrivilege() {
+        return privilege;
+    }
+
+    public void setPrivilege(Map<String, Object> privilege) {
+        this.privilege = privilege;
+    }
+
+    private String id;
+    private String name;
+    private String logo;
+    private boolean secure;
+    private String password;
+    private Map<String,Object> members;
+    private Map<String,Object> currentgames;
+    private Map<String,Object> privilege;
+
 }
