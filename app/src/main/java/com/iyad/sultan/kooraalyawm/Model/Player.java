@@ -10,7 +10,7 @@ public class Player {
     private String icon;
     private Map<String,Object> privilege;
     private Map<String,Object> groups;
-
+    private String pushToken;
 
     public String getId() {
         return id;
@@ -50,5 +50,12 @@ public class Player {
 
     public void setGroups(Map<String, Object> groups) {
         this.groups = groups;
+    }
+
+    public String getPushToken() {
+        return pushToken;
+    }
+    public void setPushToken(String pushToken) {
+        this.pushToken = pushToken;
     }
 }

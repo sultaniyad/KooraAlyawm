@@ -31,7 +31,6 @@
     <string name="fragment_game">Matches</string>
 
 
-
     <!-- admin Menu -->
 
     <string name="promote_as_captain">Promote as Captain</string>
@@ -44,7 +43,6 @@
     <string name="to_create_activity">No account ? Create one</string>
     <string name="to_login">Already a member? Login</string>
     <string name="no_priv_to_create_game">No Privileges, check with captain</string>
-
 
 
     <!-- Tips -->
@@ -72,6 +70,16 @@
 
     <string name="captain">Captain</string>
     <string name="player">Player</string>
+    <string name="logout">LogOut</string>
+
+
+
+    <string name="ok">OK</string>
+    <string name="cancel_join"> Cancel</string>
+    <string name="date_passed">Verify Date may passed or  more then one month</string>
+    <string name="no_player_required">Not enough players to start game minimum 4</string>
+
+
 </resources>
 
 

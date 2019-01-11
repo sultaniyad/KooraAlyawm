@@ -14,20 +14,32 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.iyad.sultan.kooraalyawm.HomePage.FragmentGame;
 import com.iyad.sultan.kooraalyawm.HomePage.FragmentGroup;
 import com.iyad.sultan.kooraalyawm.HomePage.FragmentSearch;
 import com.iyad.sultan.kooraalyawm.HomePage.HomePageAdapter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity  {
 
     private static final int PREMISSION_REQUEST_CODE = 101;
     private static final int REQUEST_CODE = 301;
+    private static final String TAG = "MainActivity" ;
 
     //UI
     private ViewPager viewPager;
@@ -40,7 +52,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        checkGooglePlayServices();
 
         //First Time show Splash
         showSplash();
@@ -49,6 +61,7 @@ public class MainActivity extends AppCompatActivity  {
         drawUI();
 
 
+        getToaken();
         //Load  resource background 1 usr not loging Or 2 user already login laod resources
 
 
@@ -68,10 +81,12 @@ public class MainActivity extends AppCompatActivity  {
         viewPager.setOffscreenPageLimit(3);
         tabLayout =(TabLayout) findViewById(R.id.home_page_tabLayout);
         toolbar = (Toolbar) findViewById(R.id.home_page_toolBar);
+     //   toolbar.setNavigationIcon(R.mipmap.ic_player_defualt);
 
         //set Toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         //CreateAdapter
@@ -164,5 +179,75 @@ public class MainActivity extends AppCompatActivity  {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("Permissions needed, PLease Exit App ant try again ");
         alertDialog.create();
+    }
+
+
+
+    private void checkGooglePlayServices(){
+
+        GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if(!task.isSuccessful()) {
+                    Log.w(TAG, task.getException());
+                    return;
+                }
+
+                Log.d(TAG, "Google Play Service Available");
+            }
+        });
+
+    }
+
+
+
+    private void sendRegistrationToServer(String token) {
+        // TODO: Implement this method to send token to your app server.
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null)
+            return;
+
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("players").child(user.getUid()).child("pushToken");
+
+
+
+        mRef.setValue(token).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if(!task.isSuccessful()){
+                    Log.w(TAG,"Store Token failed" +task.getException());
+                    return;
+                }
+                Log.d(TAG,"Store Token successfully to User Info");
+            }
+        });
+    }
+    private void getToaken(){
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+
+                if (!task.isSuccessful()) {
+                    Log.w(TAG, "getInstanceId failed", task.getException());
+                    return;
+                }
+
+                //Get a Token
+                String token = task.getResult().getToken();
+
+                String meg = "Token ID: " + token;
+                Log.d(TAG,meg);
+                sendRegistrationToServer(token);
+
+
+
+            }
+        });
+        // If you want to send messages to this application instance or
+        // manage this apps subscriptions on the server side, send the
+        // Instance ID token to your app server.
     }
 }

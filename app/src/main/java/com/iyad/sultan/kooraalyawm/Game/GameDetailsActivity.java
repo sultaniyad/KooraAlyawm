@@ -2,6 +2,7 @@ package com.iyad.sultan.kooraalyawm.Game;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraManager;
@@ -11,12 +12,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -59,12 +63,15 @@ import static com.iyad.sultan.kooraalyawm.Utilities.Constants.PLAYER_PATH;
 
 public class GameDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final String TAG = "OfflineActivity";
+
     //Constant
     public  static final String GAME_LOCATION = "GAME_LOCATION";
     public  static final String GAME_ID = "GAME_ID";
     public  static final String REQURIED_NUMBER = "REQURIED_NUMBER";
     public  static final String Registered = "Registered";
     private static final String PLAYER_ICON_FOR_NEW_GAME = "PLAYER_ICON_FOR_NEW_GAME";
+    private static final String GAME_FEES = "GAME_FEES";
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
@@ -87,6 +94,7 @@ public class GameDetailsActivity extends AppCompatActivity implements OnMapReady
     private String required ;
     private String current ;
     private String icon;
+    private String fees;
  //   private static final String GAME_ID = "GAME_ID_UNIQUE";
 
     //Map
@@ -112,12 +120,14 @@ public class GameDetailsActivity extends AppCompatActivity implements OnMapReady
 
         //else draw UI getting ref
         drawUI();
+        checkConnectivity();
 
         gameId = getIntent().getStringExtra(GAME_ID);
         location = getIntent().getStringExtra(GAME_LOCATION);
         required = getIntent().getStringExtra(REQURIED_NUMBER);
         current = getIntent().getStringExtra(Registered);
         icon = getIntent().getStringExtra(PLAYER_ICON_FOR_NEW_GAME);
+        fees = getIntent().getStringExtra(GAME_FEES);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         mRootRef = FirebaseDatabase.getInstance().getReference();
@@ -150,13 +160,7 @@ public class GameDetailsActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View v) {
 
-                Map<String,Object> status = new HashMap<String,Object>();
-                status.put("attend", false);
-
-               DatabaseReference attendRef = gameDetailsRefr.child(user.getUid());
-                attendRef.updateChildren(status);
-                showResult("Change Status to Unable to attend");
-                hideFAB(mBtnExitGame);
+                confirmExitDialog();
             }
         });
 
@@ -173,7 +177,9 @@ public class GameDetailsActivity extends AppCompatActivity implements OnMapReady
                 hideFAB(btnJoinGame);
                 */
 
-                addPLayerToThisGame();
+
+                confirmJoinDialog(fees,"Me");
+
             }
         });
         //setToolbar
@@ -228,7 +234,15 @@ public class GameDetailsActivity extends AppCompatActivity implements OnMapReady
         });
 
     }
+    private void exitPlayerfromThisGame(){
+        Map<String,Object> status = new HashMap<String,Object>();
+        status.put("attend", false);
 
+        DatabaseReference attendRef = gameDetailsRefr.child(user.getUid());
+        attendRef.updateChildren(status);
+        showResult("Change Status to Unable to attend");
+        hideFAB(mBtnExitGame);
+    }
     private String getDateNow() {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
@@ -420,9 +434,75 @@ public class GameDetailsActivity extends AppCompatActivity implements OnMapReady
 
     //Call Back
 
+  private void checkConnectivity(){
 
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                 //   Log.d(TAG, "connected");
+
+                } else {
+                  //  Log.d(TAG, "not connected");
+                    hideFAB(btnJoinGame);
+                    hideFAB(mBtnExitGame);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Listener was cancelled");
+            }
+        });
+    }
+/*
     interface  onGameAttend{
         void onAttendChange();
+    }*/
+
+
+
+   private void confirmJoinDialog(String price, String organizer){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Note!").setMessage("Join this game will coast you " + price + " Payment collect by " + organizer).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                addPLayerToThisGame();
+
+            }
+        }).setNegativeButton(R.string.cancel_join, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Toast.makeText(GameDetailsActivity.this, "No issue :)", Toast.LENGTH_SHORT).show();
+            }
+        }).show();
     }
 
+   private void confirmExitDialog(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Change Status").setMessage("you still registered for this game, but not sure if you gonna make it")
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        exitPlayerfromThisGame();
+
+                    }
+                }).setNegativeButton(R.string.cancel_join, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }).show();
+   }
 }
+
+
+
+

@@ -1,5 +1,6 @@
 package com.iyad.sultan.kooraalyawm.Game;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -39,10 +41,13 @@ import com.iyad.sultan.kooraalyawm.R;
 import com.iyad.sultan.kooraalyawm.Utilities.UiValidator;
 
 import java.security.Key;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static com.iyad.sultan.kooraalyawm.Utilities.Constants.GAME_DETAILS_PATH;
 import static com.iyad.sultan.kooraalyawm.Utilities.Constants.GAME_PATH;
@@ -54,6 +59,7 @@ public class AddGame extends AppCompatActivity {
     private static final String GROUP_ID = "GROUP_ID_UNIQUE";
     private static final String GROUP_NAME = "GROUP_NAME";
     private static final String PLAYER_ICON_FOR_NEW_GAME = "PLAYER_ICON_FOR_NEW_GAME";
+    private static final String TAG ="AddGameActivity" ;
     private String groupId;
     private String groupName;
     private String icon;
@@ -267,25 +273,24 @@ public class AddGame extends AppCompatActivity {
 
                 if (isUserSelectedLocation()) {
 
-                  //  mLocation.setText(place.getLatLng().toString());
+                    //  mLocation.setText(place.getLatLng().toString());
 
 
-                    String lol =   place.getLatLng().toString() ;
+                    String lol = place.getLatLng().toString();
 
-                         String coordinate = "";
+                    String coordinate = "";
 
-                       coordinate += lol.replace("lat/lng: (","");
-                       coordinate = coordinate.replace(")","");
+                    coordinate += lol.replace("lat/lng: (", "");
+                    coordinate = coordinate.replace(")", "");
 
-                       mLocation.setText(coordinate);
-
-                    }
-
+                    mLocation.setText(coordinate);
 
                 }
+
+
             }
         }
-
+    }
 
 
     //ON User submit
@@ -303,6 +308,18 @@ public class AddGame extends AppCompatActivity {
             return;
         if (!validDate(uiValidator))
             return;
+        if(Integer.parseInt(mRequiredNumber.getText().toString()) < 3)
+        {
+            showNoenoughPlayers();
+            return;
+        }
+        if (isNotValidGameDate(mDateUI.getText().toString())) {
+            showDatePassed();
+            return;
+        }
+
+
+
 
 //else add game all valid input
 
@@ -329,6 +346,11 @@ public class AddGame extends AppCompatActivity {
         addGameToHero(game, key);
     }
 
+    private void showNoenoughPlayers() {
+        Snackbar snackbar = Snackbar.make(rootLayout, R.string.no_player_required, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
     private void addGameToHero(Game game, String key) {
 
         String uid = user.getUid();
@@ -347,7 +369,6 @@ public class AddGame extends AppCompatActivity {
 //Add Game Details
 
         //get time now
-
 
 
         GameAttendees attendees = new GameAttendees();
@@ -381,20 +402,20 @@ public class AddGame extends AppCompatActivity {
 
         //Add Game to All Player Node
         mGroupMembersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
 //snap.getKey is player key of this group
-                        if(snap.exists())
-                            mPlayerRef.child(snap.getKey()).child("games").updateChildren(games).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (!task.isSuccessful())
-                                        Toast.makeText(AddGame.this, "mmm something went wrong D:", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                    }
+                    if (snap.exists())
+                        mPlayerRef.child(snap.getKey()).child("games").updateChildren(games).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (!task.isSuccessful())
+                                    Toast.makeText(AddGame.this, "mmm something went wrong D:", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -406,6 +427,10 @@ public class AddGame extends AppCompatActivity {
 
     }
 
+    private void showDatePassed(){
+        Snackbar snackbar = Snackbar.make(rootLayout, R.string.date_passed, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
     private void showResult(String meg) {
 
         Snackbar snackbar = Snackbar.make(rootLayout, meg, Snackbar.LENGTH_LONG);
@@ -482,7 +507,8 @@ public class AddGame extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
-//dd-MM-yyyy HH:mm
+
+    //dd-MM-yyyy HH:mm
     private String getDateNow() {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
@@ -491,6 +517,49 @@ public class AddGame extends AppCompatActivity {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int min = cal.get(Calendar.MINUTE);
 
-        return day + "-" + (month+1) +"-" + year + " " + hour + ":"+ min;
+        return day + "-" + (month + 1) + "-" + year + " " + hour + ":" + min;
+    }
+
+
+    //Date can not be more then month and not pass
+    boolean isNotValidGameDate(String date) {
+
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+
+            Date mGameDate = format.parse(date);
+            Calendar cal = Calendar.getInstance();
+            Date currentDate = format.parse(cal.get(Calendar.DAY_OF_MONTH) + "-" + (cal.get(Calendar.MONTH) + 1) +
+                    "-" + cal.get(Calendar.YEAR) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE));
+
+            long timeDiff = mGameDate.getTime() - currentDate.getTime();
+            long days =  TimeUnit.DAYS.convert(timeDiff,TimeUnit.MILLISECONDS);
+
+            Log.d(TAG,"Days is " + days);
+
+            if(days >= 1 && days <= 30) {
+                return false;
+
+            }
+
+            else
+            {
+                showDatePassed();
+                return true;
+            }
+
+
+
+
+
+// "31-12-2018 11:30"
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return true;
+        }
+
+
     }
 }

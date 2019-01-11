@@ -10,6 +10,9 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -26,6 +29,7 @@ import com.iyad.sultan.kooraalyawm.Groups.GroupDetailsActivity;
 import com.iyad.sultan.kooraalyawm.Groups.UserGroupAdapter;
 import com.iyad.sultan.kooraalyawm.Model.Group;
 import com.iyad.sultan.kooraalyawm.Model.Group3;
+import com.iyad.sultan.kooraalyawm.Player.PlayerActivity;
 import com.iyad.sultan.kooraalyawm.R;
 import com.iyad.sultan.kooraalyawm.Sign.SignIn;
 
@@ -79,10 +83,11 @@ public class FragmentGroup extends Fragment implements UserGroupAdapter.UserGrou
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
+
             mAuth = FirebaseAuth.getInstance();
             user =  mAuth.getCurrentUser();
 
-          mRoot= FirebaseDatabase.getInstance().getReference();
+          mRoot = FirebaseDatabase.getInstance().getReference();
            v = inflater.inflate(R.layout.group_fragment,container,false);
 
           drawUI();
@@ -124,7 +129,40 @@ public class FragmentGroup extends Fragment implements UserGroupAdapter.UserGrou
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAddGroup =  v.findViewById(R.id.btn_add_new_group);
         btnLogin = v.findViewById(R.id.btn_go_to_login);
+        setHasOptionsMenu(true);
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.player_menu,menu);
+        menu.getItem(0).setIcon(R.drawable.ic_player_item);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.player_profile_item:
+
+
+                startActivity(new Intent(getContext(),PlayerActivity.class));
+
+                return true;
+
+            case R.id.group_detail_exit_group:
+
+                // Not implemented here
+                return false;
+            default:
+                break;
+        }
+
+        return false;
     }
 
     //To add new Group
@@ -157,6 +195,7 @@ public class FragmentGroup extends Fragment implements UserGroupAdapter.UserGrou
 
 
         }
+        else goToLogin();
 
     }
 
@@ -369,6 +408,7 @@ public class FragmentGroup extends Fragment implements UserGroupAdapter.UserGrou
 
 
     }
+
 
 
 }

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/gameCardView"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="3dp"
+    app:cardCornerRadius="2dp"
+    app:cardUseCompatPadding="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+
+        <ImageView
+            android:paddingRight="3dp"
+            android:maxWidth="30dp"
+            android:maxHeight="30dp"
+            android:minHeight="30dp"
+            android:minWidth="30dp"
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/game_icon_tab"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+           />
+
+
+        <TextView
+            android:id="@+id/game_txt_group_name"
+            android:textColor="#040404"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img"
+            android:layout_alignParentTop="true"
+            android:text="group of game"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:layout_toEndOf="@id/img" />
+
+
+        <TextView
+            android:id="@+id/stadium_name"
+            android:textColor="#343434"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Staduim name"
+            android:typeface="sans"
+            android:layout_toRightOf="@id/img"
+            android:layout_below="@id/game_txt_group_name"
+            android:layout_toEndOf="@id/img" />
+
+        <TextView
+            android:id="@+id/txt_game_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2019-5-5"
+            android:textSize="12sp"
+            android:textColor="#343434"
+            android:layout_toRightOf="@id/img"
+            android:layout_below="@id/stadium_name"
+            android:layout_toEndOf="@id/img" />
+
+
+        <LinearLayout
+            android:id="@+id/current"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_game_attendance"
+                style="?android:textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="5"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+
+                style="?android:textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary" />
+            <TextView
+                android:id="@+id/txt_game_required_number"
+                style="?android:textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:minWidth="50dp"
+            android:id="@+id/txt_game_fee"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50 SAR"
+            android:layout_below="@+id/current"
+            android:layout_alignRight="@+id/current"
+            android:layout_alignEnd="@+id/current"
+            android:textColor="@color/colorPrimary"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

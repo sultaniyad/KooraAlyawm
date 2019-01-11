@@ -51,6 +51,7 @@ public class FragmentGame extends Fragment implements GameAdapter.OnSelectedGame
     public static final String REQURIED_NUMBER = "REQURIED_NUMBER";
     public static final String Registered = "Registered";
     private static final String PLAYER_ICON_FOR_NEW_GAME = "PLAYER_ICON_FOR_NEW_GAME";
+    private static final String GAME_FEES = "GAME_FEES";
     private FirebaseAuth mAuth;
 
     private RecyclerView mRecyclerView;
@@ -90,7 +91,7 @@ public class FragmentGame extends Fragment implements GameAdapter.OnSelectedGame
             mGameRef = mRootRef.child(GAME_PATH);
             mPlayerRef = mRootRef.child(PLAYER_PATH).child(user.getUid());
 
-             getPlayerGames();
+            getPlayerGames();
         }
 
         //Inti
@@ -109,6 +110,7 @@ public class FragmentGame extends Fragment implements GameAdapter.OnSelectedGame
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 gameIDs.clear();
                 mDataSet.clear();
+
                 mCurrentPlayer = dataSnapshot.getValue(Player.class);
                 //This contains a list of group keys associated to the user;
                 Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
@@ -124,6 +126,8 @@ public class FragmentGame extends Fragment implements GameAdapter.OnSelectedGame
                                 mDataSet.add(game);
                                 mAdapter.notifyDataSetChanged();
                             }
+
+
                         }
 
                         @Override
@@ -230,6 +234,7 @@ public class FragmentGame extends Fragment implements GameAdapter.OnSelectedGame
         i.putExtra(GAME_LOCATION, game.getLocation());
         i.putExtra(REQURIED_NUMBER, game.getRequirednumber());
         i.putExtra(Registered, game.getRegistered());
+        i.putExtra(GAME_FEES,game.getFees());
 
         i.putExtra(PLAYER_ICON_FOR_NEW_GAME, mCurrentPlayer.getIcon());
         startActivity(i);
